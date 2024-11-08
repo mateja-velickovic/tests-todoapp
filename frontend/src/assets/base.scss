@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[data-theme='dark'] {
+  --bg-color1: #121416;
+  --font-color: #f4f4f4;
+}
+[data-theme='light'] {
+  --bg-color1: #f4f4f4;
+  --font-color: #121416;
+}
+
+body {
+  background-color: var(--bg-color1);
+  color: var(--font-color);
+}
+
+.or {
+  margin: 1rem 0px;
+  text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.8rem;
+  line-height: 1.8rem;
+  color: rgb(140, 146, 156);
+  &::before,
+  &::after {
+    content: '';
+    display: inline-block;
+    border-top: 0.1rem solid rgb(227, 229, 231);
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+  }
+  &::after {
+    display: inline-block;
+    border-top: 0.1rem solid rgb(227, 229, 231);
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+  }
+}
+
+.form-group {
+  margin-bottom: 15px;
+  &.location {
+    display: flex;
+    justify-content: space-between;
+    div:first-child {
+      width: 20%;
+    }
+    div:last-child {
+      width: 75%;
+    }
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+span[role='alert'] {
+  font-size: 12px;
+}
