@@ -28,7 +28,7 @@ router.post("/add", async (req, res) => {
     console.error("CREATE USER: ", err);
     let errorMsg = "Erreur lors de l'inscription!";
     if(err && err.code === 11000) {
-      errorMsg = "Un compte avec cet email exist déjà!";
+      errorMsg = "Un compte avec cet email existe déjà!";
     }
     res.status(400).json(errorMsg);
   }
