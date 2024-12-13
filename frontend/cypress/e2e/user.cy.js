@@ -1,23 +1,13 @@
-describe('Affichage du formulaire', () => {
-  it('Affiche le formulaire de création de compte', () => {
+describe('Création de compte', () => {
+  beforeEach(() => {
     cy.visit('/register');
+  });
+
+  it('Affiche le formulaire de création de compte', () => {
     cy.get('input[name="email"]').should('exist');
     cy.get('input[name="password"]').should('exist');
     cy.get('input[name="confirmation"]').should('exist');
     cy.contains('Créer un compte').should('exist');
-  });
-
-  it('Affiche le formulaire de connexion', () => {
-    cy.visit('/login');
-    cy.get('input[name="email"]').should('exist');
-    cy.get('input[name="password"]').should('exist');
-    cy.contains('Connecter').should('exist');
-  });
-});
-
-describe('Création de compte', () => {
-  beforeEach(() => {
-    cy.visit('/register');
   });
 
   it('Créer un utilisateur valide', () => {
@@ -65,6 +55,12 @@ describe('Se connecter à un compte', () => {
     cy.visit('/login');
   });
 
+  it('Affiche le formulaire de connexion', () => {
+    cy.get('input[name="email"]').should('exist');
+    cy.get('input[name="password"]').should('exist');
+    cy.contains('Connecter').should('exist');
+  });
+
   it('Se connecter à un utilisateur existant', () => {
     cy.get('input[name="email"]').type('test@example.com');
     cy.get('input[name="password"]').type('password123');
@@ -82,4 +78,35 @@ describe('Se connecter à un compte', () => {
     cy.url().should('include', '/login');
     cy.contains('Utilisateur non trouvé').should('exist');
   });
+});
+
+describe('Gestion d\'une tâche', () => {
+  beforeEach(() => {
+    cy.visit('/login');
+
+    cy.get('input[name="email"]').type('test@example.com');
+    cy.get('input[name="password"]').type('password123');
+    cy.get('button[type="submit"]').click();
+  });
+
+  it('Créer une tâche', () => {
+    cy.get('input[name="text"]').type('Voici une tâche');
+    cy.get('button[type="submit"]').click();
+
+    cy.contains('Voici une tâche').should('exist');
+  });
+
+    it('Supprimer une tâche une tâche', () => {
+    cy.get('#list li') 
+      .contains('Voici une tâche')
+      .should('be.visible');
+
+    cy.get('#list li') 
+      .contains('Voici une tâche')
+      .find('#trashicon') 
+      .click();
+
+    cy.get('#list').should('not.contain', 'Voici une tâche'); 
+  });
+
 });
