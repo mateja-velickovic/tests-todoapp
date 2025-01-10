@@ -39,6 +39,7 @@ const deleteTodoItem = async (id: any) => {
           <li
             v-for="todo in allTodo"
             :key="todo._id"
+            :data-id="todo._id"
             :class="todo.completed ? 'bg-rose-500' : 'bg-green-500'"
             class="w-full flex items-center justify-between p-2 text-sm leading-6 rounded-md border border-gray-400 mb-2"
           >

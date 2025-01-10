@@ -19,7 +19,7 @@ router.post("/add", async (req, res) => {
       });
       try {
         await todo.save();
-        res.status(200).json(null);
+        res.status(200).json({_id: todo._id});
       } catch (err) {
         console.error("CREATE TODO: ", err);
         res.status(400).json("Erreur lors de la création du todo");
