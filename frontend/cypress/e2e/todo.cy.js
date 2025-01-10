@@ -17,14 +17,11 @@ describe('Gestion d\'une tâche', () => {
   it('Supprimer une tâche', () => {
     const taskText = 'Voici une tâche spécifique';
 
-    // Intercepter la requête de création de tâche
     cy.intercept('POST', '/api/todo/add').as('createTodo');
 
-    // Créer la tâche
     cy.get('input[name="text"]').type(taskText);
     cy.get('button[type="submit"]').click();
 
-    // Attendre la réponse de la requête et récupérer l'ID de la tâche
     cy.wait('@createTodo').then((interception) => {
       const responseBody = interception.response.body;
       if (!responseBody || !responseBody._id) {
@@ -32,17 +29,41 @@ describe('Gestion d\'une tâche', () => {
       }
       const taskId = responseBody._id;
 
-      // Vérifier que la tâche est visible
       cy.get(`#list li[data-id="${taskId}"]`)
           .should('be.visible');
 
-      // Supprimer la tâche
       cy.get(`#list li[data-id="${taskId}"]`)
           .find('#trashicon')
           .click();
 
-      // Vérifier que la tâche a été supprimée
       cy.get('#list').should('not.contain', taskText);
+    });
+  });
+
+  it('Compléter une tâche', () => {
+    const taskText = 'Voici une tâche à compléter';
+
+    cy.intercept('POST', '/api/todo/add').as('createTodo');
+
+    cy.get('input[name="text"]').type(taskText);
+    cy.get('button[type="submit"]').click();
+
+    cy.wait('@createTodo').then((interception) => {
+      const responseBody = interception.response.body;
+      if (!responseBody || !responseBody._id) {
+        throw new Error('La réponse de la requête ne contient pas d\'ID de tâche');
+      }
+      const taskId = responseBody._id;
+
+      cy.get(`#list li[data-id="${taskId}"]`)
+          .should('be.visible');
+
+      cy.get(`#list li[data-id="${taskId}"]`)
+          .find('input[type="checkbox"]')
+          .check();
+
+      cy.get(`#list li[data-id="${taskId}"]`)
+          .should('have.class', 'bg-rose-500'); // Assurez-vous que la classe 'bg-rose-500' est ajoutée lorsque la tâche est terminée
     });
   });
 });
