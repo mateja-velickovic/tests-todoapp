@@ -63,7 +63,7 @@ describe('Gestion d\'une tâche', () => {
           .check();
 
       cy.get(`#list li[data-id="${taskId}"]`)
-          .should('have.class', 'bg-rose-500'); // Assurez-vous que la classe 'bg-rose-500' est ajoutée lorsque la tâche est terminée
+          .should('have.class', 'bg-rose-500'); 
     });
   });
 });
